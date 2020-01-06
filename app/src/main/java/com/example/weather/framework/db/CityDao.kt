@@ -10,9 +10,9 @@ interface CityDao {
     @Insert(onConflict = REPLACE)
     suspend fun addCity(city: CityEntity)
 
-    @Query("SELECT * FROM city")
+    @Query("SELECT * FROM city ORDER BY id DESC")
     suspend fun getCities(): List<CityEntity>
 
-    @Query("SELECT * FROM city where id = :id")
+    @Query("SELECT * FROM city WHERE id = :id")
     suspend fun getCity(id: Int): CityEntity
 }
