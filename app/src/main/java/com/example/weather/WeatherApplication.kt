@@ -1,0 +1,16 @@
+package com.example.weather
+
+import android.app.Application
+import com.example.weather.framework.di.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+
+class WeatherApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@WeatherApplication)
+        }
+        injectFeature()
+    }
+}
