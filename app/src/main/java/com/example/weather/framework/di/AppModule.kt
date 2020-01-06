@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 
 val appModule: Module = module {
-    single {  Interactors(get(), get(), get()) }
+    single {  Interactors(get(), get(), get(), get()) }
 }
