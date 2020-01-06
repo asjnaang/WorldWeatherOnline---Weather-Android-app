@@ -13,7 +13,7 @@ val networkModule: Module = module {
     single { weatherApi }
 }
 
-private const val BASE_URL = "http://api.worldweatheronline.com/premium/v1/"
+private const val BASE_URL = "https://api.worldweatheronline.com/premium/v1/"
 private val retrofit: Retrofit = createNetworkClient(BASE_URL, BuildConfig.DEBUG)
 
 private val cityApi: CityApi = retrofit.create(

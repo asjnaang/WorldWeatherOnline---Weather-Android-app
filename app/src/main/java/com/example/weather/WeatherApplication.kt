@@ -1,7 +1,7 @@
 package com.example.weather
 
 import android.app.Application
-import com.example.weather.framework.di.*
+import com.example.weather.framework.di.injectFeature
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

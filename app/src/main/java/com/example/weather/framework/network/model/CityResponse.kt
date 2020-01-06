@@ -29,7 +29,9 @@ data class Result(
 fun Result.mapToDomain(): City =
     City(areaName[0].value, country[0].value, latitude.toString(), longitude.toString())
 
-fun CityResponse.mapToDomain(): List<City> = search_api.result.map { it.mapToDomain() }
+fun CityResponse.mapToDomain(): List<City> = search_api?.let { search_api ->
+    search_api.result.map { it.mapToDomain() }
+}
 
 
 

@@ -18,6 +18,6 @@ class WeatherDataSourceImpl(private val context: Context, private val weatherApi
         return weatherApi.getWeatherByCity(
             key = context.getString(R.string.api_key),
             latlongString = coordinates.lat.toString().plus(coordinates.lon)
-        ).mapToDomain()
+        )?.mapToDomain()
     }
 }
