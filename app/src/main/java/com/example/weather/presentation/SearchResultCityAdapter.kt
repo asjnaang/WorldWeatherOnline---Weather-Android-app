@@ -6,9 +6,16 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.core.domain.City
+import com.example.weather.helper.NavigationListener
+import com.example.weather.onClick
 import com.example.weather.toNameAndCountry
 
-class SearchResultCityAdapter(context: Context, resource: Int) :
+class SearchResultCityAdapter(
+    context: Context,
+    resource: Int,
+    private val navigationListener: NavigationListener,
+    private val cbItemClick: () -> Boolean
+) :
     ArrayAdapter<City?>(context, resource) {
     private val mlistData = arrayListOf<City>()
     fun setData(list: List<City>) {
@@ -18,7 +25,12 @@ class SearchResultCityAdapter(context: Context, resource: Int) :
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val textView = super.getView(position, convertView, parent) as TextView
-        textView?.text = getItem(position)?.toNameAndCountry()
+        val city = getItem(position)
+        textView.onClick {
+            cbItemClick()
+            navigationListener.goNext(city, true)
+        }
+        textView.text = city.toNameAndCountry()
         return textView
     }
 
@@ -26,7 +38,7 @@ class SearchResultCityAdapter(context: Context, resource: Int) :
         return mlistData.size
     }
 
-    override fun getItem(position: Int): City? {
+    override fun getItem(position: Int): City {
         return mlistData[position]
     }
 }

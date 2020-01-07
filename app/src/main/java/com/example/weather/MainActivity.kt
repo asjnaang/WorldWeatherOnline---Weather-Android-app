@@ -15,6 +15,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.SearchAutoComplete
 import androidx.core.os.bundleOf
 import com.example.core.domain.City
+import com.example.weather.helper.NavigationListener
 import com.example.weather.presentation.SearchResultCityAdapter
 import com.example.weather.presentation.ui.city.CityFragment
 import com.example.weather.presentation.ui.home.MainFragment
@@ -25,7 +26,7 @@ import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationListener {
 
     private lateinit var searchResultCityAdapter: SearchResultCityAdapter
     lateinit var handler: Handler
@@ -45,16 +46,6 @@ class MainActivity : AppCompatActivity() {
     private fun goToMainFragment() {
         supportFragmentManager.beginTransaction()
             .add(R.id.container, MainFragment.newInstance())
-            .commit()
-    }
-
-
-    private fun goNext(city: City) {
-        val fragment = CityFragment.newInstance()
-        fragment.arguments = bundleOf(AppConstants.CITY to city)
-        supportFragmentManager.beginTransaction()
-            .add(R.id.main, fragment)
-            .addToBackStack(this.javaClass.name)
             .commit()
     }
 
@@ -103,18 +94,11 @@ class MainActivity : AppCompatActivity() {
         searchAutoComplete.setDropDownBackgroundResource(android.R.color.background_light)
         searchResultCityAdapter = SearchResultCityAdapter(
             context,
-            android.R.layout.simple_dropdown_item_1line
-        )
+            android.R.layout.simple_dropdown_item_1line, this
+        ) {
+            searchMenuItem.collapseActionView()
+        }
         searchAutoComplete.setAdapter(searchResultCityAdapter)
-        searchAutoComplete.onItemClickListener =
-            OnItemClickListener { parent, view, position, id ->
-                searchMenuItem.collapseActionView()
-                val city = parent.getItemAtPosition(position) as City
-                GlobalScope.launch {
-                    interactors.storeCity.invoke(city)
-                }
-                goNext(city)
-            }
         searchAutoComplete.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
@@ -139,6 +123,20 @@ class MainActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable) {}
         })
+    }
+
+    override fun goNext(city: City, store: Boolean) {
+        if (store) {
+            GlobalScope.launch {
+                interactors.storeCity.invoke(city)
+            }
+        }
+        val fragment = CityFragment.newInstance()
+        fragment.arguments = bundleOf(AppConstants.CITY to city)
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main, fragment)
+            .addToBackStack(this.javaClass.name)
+            .commit()
     }
 }
 

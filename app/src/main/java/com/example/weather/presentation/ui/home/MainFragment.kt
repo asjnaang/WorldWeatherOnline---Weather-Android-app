@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.domain.City
 import com.example.weather.Interactors
+import com.example.weather.MainActivity
 import com.example.weather.R
 import com.example.weather.presentation.ui.CityItemAdapter
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -51,7 +52,7 @@ class MainFragment : Fragment() {
 
     private fun initCityItems(cities: List<City>) {
         val viewManager = LinearLayoutManager(activity)
-        val viewAdapter = CityItemAdapter(cities)
+        val viewAdapter = CityItemAdapter(cities, activity as MainActivity)
         city_items.apply {
             setHasFixedSize(true)
             layoutManager = viewManager

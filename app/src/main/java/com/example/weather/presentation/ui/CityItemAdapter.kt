@@ -1,13 +1,19 @@
 package com.example.weather.presentation.ui
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.City
+import com.example.weather.helper.NavigationListener
+import com.example.weather.onClick
 import com.example.weather.toNameAndCountry
 
-class CityItemAdapter(private val cities: List<City> = emptyList()) :
+class CityItemAdapter(
+    private val cities: List<City> = emptyList(),
+    private val navigationListener: NavigationListener
+) :
     RecyclerView.Adapter<CityItemAdapter.ViewHolder>() {
     class ViewHolder(textView: TextView) : RecyclerView.ViewHolder(textView)
 
@@ -20,7 +26,12 @@ class CityItemAdapter(private val cities: List<City> = emptyList()) :
     override fun getItemCount() = cities.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        (holder.itemView as TextView).text = cities[position].toNameAndCountry()
+        val view = (holder.itemView as TextView)
+        val city = cities[position]
+        view.text = city.toNameAndCountry()
+        view.onClick {
+            navigationListener.goNext(city)
+        }
     }
 }
 
