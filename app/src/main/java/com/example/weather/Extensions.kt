@@ -2,6 +2,9 @@ package com.example.weather
 
 import android.os.SystemClock
 import android.view.View
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.example.core.domain.City
 
 fun String?.filterEmpty(defaultValue: String = ""): String {
@@ -22,4 +25,9 @@ fun View.onClick(cb: (View) -> Unit) {
         lastClickTime = SystemClock.elapsedRealtime().toInt()
         cb(it)
     }
+}
+
+@BindingAdapter("imageUrl")
+fun loadImage(view: ImageView, weatherImageUrl: String?) {
+    Glide.with(view.context).load(weatherImageUrl).into(view)
 }

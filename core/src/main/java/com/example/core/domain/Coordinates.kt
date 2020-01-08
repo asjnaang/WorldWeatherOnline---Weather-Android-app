@@ -1,3 +1,3 @@
 package com.example.core.domain
 
-data class Coordinates(val lon: Double, val lat: Double)
+data class Coordinates(val lat: Double, val lon: Double)

@@ -1,14 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weather.presentation.ui.city.CityViewModel" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_text_color"
     tools:context=".presentation.ui.city.CityFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyle"
+        android:visibility="@{viewModel.progressBarVisibility}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</FrameLayout>
+<!--    Top Weather ImageView-->
+    <ImageView
+        android:id="@+id/weather_image_view"
+        android:layout_width="@dimen/weather_image_size"
+        android:layout_height="@dimen/weather_image_size"
+        android:layout_marginTop="@dimen/margin_100dp"
+        app:imageUrl="@{viewModel.weatherImageUrl}"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!--Weather Description-->
+    <TextView
+        android:id="@+id/weather_desc_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/weather_desc_text_size"
+        android:text="@{viewModel.desc}"
+        app:layout_constraintTop_toBottomOf="@id/weather_image_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+<!--    Humidity -->
+
+    <TextView
+        android:id="@+id/humdity_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/WeatherTextStyle"
+        android:text="@string/humidity"
+        app:layout_constraintTop_toBottomOf="@id/weather_desc_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/humdity_value_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/WeatherTextStyle"
+        android:text="@{viewModel.humidity}"
+        app:layout_constraintTop_toBottomOf="@id/weather_desc_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/humdity_title_tv"/>
+
+    <!--    Temperature -->
+
+    <TextView
+        android:id="@+id/temp_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temperature"
+        style="@style/WeatherTextStyle"
+        app:layout_constraintTop_toBottomOf="@id/weather_desc_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/temp_value_tv"/>
+
+    <TextView
+        android:id="@+id/temp_value_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/WeatherTextStyle"
+        android:text="@{viewModel.temp}"
+        app:layout_constraintTop_toBottomOf="@id/weather_desc_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

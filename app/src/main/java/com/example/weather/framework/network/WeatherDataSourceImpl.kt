@@ -14,10 +14,10 @@ import com.example.weather.framework.network.service.WeatherApi
 
 class WeatherDataSourceImpl(private val context: Context, private val weatherApi: WeatherApi) :
     WeatherDataSource {
-    override suspend fun getCurrent(coordinates: Coordinates): Weather {
+    override suspend fun getCurrentWeather(coordinates: Coordinates): Weather {
         return weatherApi.getWeatherByCity(
             key = context.getString(R.string.api_key),
-            latlongString = coordinates.lat.toString().plus(coordinates.lon)
+            latlongString = coordinates.lat.toString().plus(",").plus(coordinates.lon)
         )?.mapToDomain()
     }
 }

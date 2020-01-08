@@ -5,6 +5,6 @@ import com.example.core.domain.Weather
 
 
 class WeatherRepository(private val dataSource: WeatherDataSource) {
-    suspend fun getCurrent(coordinates: Coordinates): Weather =
-        dataSource.getCurrent(coordinates)
+    suspend fun getCurrentWeather(coordinates: Coordinates): Weather =
+        dataSource.getCurrentWeather(coordinates)
 }

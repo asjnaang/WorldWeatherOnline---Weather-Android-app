@@ -6,6 +6,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="autoCompleteTextViewStyle">@style/cursorColor</item>
     </style>
 
+    <style name="WeatherTextStyle">
+        <item name="android:layout_marginRight">@dimen/padding10dp</item>
+        <item name="android:layout_marginLeft">@dimen/padding10dp</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <style name="cursorColor" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@android:color/white</item>
+    </style>
 </resources>

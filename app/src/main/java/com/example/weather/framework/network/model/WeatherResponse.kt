@@ -36,4 +36,5 @@ fun CurrentCondition.mapToDomain(): Weather = Weather(
     uvIndex.toString()
 )
 
-fun WeatherResponse.mapToDomain(): Weather = data.current_condition.map { it.mapToDomain() }[0]
+fun WeatherResponse.mapToDomain(): Weather =
+    data.current_condition?.let { data.current_condition.map { it.mapToDomain() }[0] }
