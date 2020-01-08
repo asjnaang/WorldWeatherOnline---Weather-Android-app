@@ -17,7 +17,6 @@ abstract class WeatherDatabase : RoomDatabase() {
         private var instance: WeatherDatabase? = null
         private fun create(context: Context): WeatherDatabase =
             Room.databaseBuilder(context, WeatherDatabase::class.java, DATABASE_NAME)
-                .fallbackToDestructiveMigration()
                 .build()
         fun getInstance(context: Context): WeatherDatabase =
             (instance ?: create(context)).also { instance = it }

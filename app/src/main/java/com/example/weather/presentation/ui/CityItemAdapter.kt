@@ -11,7 +11,7 @@ import com.example.weather.onClick
 import com.example.weather.toNameAndCountry
 
 class CityItemAdapter(
-    private val cities: List<City> = emptyList(),
+    private val cities: MutableList<City> = mutableListOf(),
     private val navigationListener: NavigationListener
 ) :
     RecyclerView.Adapter<CityItemAdapter.ViewHolder>() {
@@ -30,8 +30,14 @@ class CityItemAdapter(
         val city = cities[position]
         view.text = city.toNameAndCountry()
         view.onClick {
-            navigationListener.goNext(city)
+            navigationListener.goNext(city, store = true)
         }
+    }
+
+    fun update(updatedCities: List<City>) {
+        cities.clear()
+        cities.addAll(updatedCities)
+        notifyDataSetChanged()
     }
 }
 

@@ -28,7 +28,7 @@ class SearchResultCityAdapter(
         val city = getItem(position)
         textView.onClick {
             cbItemClick()
-            navigationListener.goNext(city, true)
+            navigationListener.goNext(city, true, addToBackStack = true)
         }
         textView.text = city.toNameAndCountry()
         return textView

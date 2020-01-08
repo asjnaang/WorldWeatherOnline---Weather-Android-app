@@ -10,7 +10,7 @@ interface CityDao {
     @Insert(onConflict = REPLACE)
     suspend fun addCity(city: CityEntity)
 
-    @Query("SELECT * FROM city ORDER BY id DESC")
+    @Query("SELECT * FROM city ORDER BY id DESC LIMIT 10")
     suspend fun getCities(): List<CityEntity>
 
     @Query("SELECT * FROM city WHERE id = :id")
