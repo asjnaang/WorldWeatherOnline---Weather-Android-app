@@ -4,24 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.core.domain.City
 import com.example.weather.Interactors
-import com.example.weather.MainActivity
 import com.example.weather.R
 import com.example.weather.databinding.MainFragmentBinding
-import com.example.weather.databinding.MainFragmentBindingImpl
 import com.example.weather.presentation.ui.BaseFragment
 import com.example.weather.presentation.ui.CityItemAdapter
 import kotlinx.android.synthetic.main.main_fragment.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class MainFragment : BaseFragment() {

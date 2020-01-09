@@ -1,12 +1,9 @@
 package com.example.weather.presentation.ui.city
 
 import android.view.View
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.Glide
 import com.example.core.domain.Weather
 
 class CityViewModel : ViewModel() {
@@ -16,7 +13,7 @@ class CityViewModel : ViewModel() {
     val weatherImageUrl: ObservableField<String> = ObservableField()
     val progressBarVisibility = ObservableInt(View.GONE)
 
-    fun hideProgressBar() {
+    private fun hideProgressBar() {
         progressBarVisibility.set(View.GONE)
     }
 

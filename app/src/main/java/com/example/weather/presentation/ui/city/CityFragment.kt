@@ -1,21 +1,13 @@
 package com.example.weather.presentation.ui.city
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.provider.Settings
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.example.core.domain.City
 import com.example.core.domain.Coordinates
 import com.example.weather.AppConstants
 import com.example.weather.Interactors
-import com.example.weather.MainActivity
-
-import com.example.weather.R
 import com.example.weather.databinding.CityFragmentBinding
 import com.example.weather.presentation.ui.BaseFragment
 import kotlinx.coroutines.Dispatchers
