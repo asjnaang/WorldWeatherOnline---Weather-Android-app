@@ -25,10 +25,11 @@ import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 
-abstract class ActionBarActivity : AppCompatActivity(), NavigationListener, ActionbarListener {
+abstract class ActionBarActivity : AppCompatActivity(), NavigationListener, ActionbarListener,
+    SearchView.OnQueryTextListener {
 
     private lateinit var searchResultCityAdapter: SearchResultCityAdapter
-    lateinit var handler: Handler
+    private lateinit var handler: Handler
     private val TRIGGER_AUTO_COMPLETE = 100
     private val AUTO_COMPLETE_DELAY: Long = 200
     private val interactors: Interactors by inject()
@@ -51,7 +52,7 @@ abstract class ActionBarActivity : AppCompatActivity(), NavigationListener, Acti
      */
     private fun fetchCityInfo(query: String?) {
         query?.let {
-            if (it.length <= 3) return
+            if (it.length <= 2) return
             GlobalScope.launch {
                 val suggestions = interactors.getRemoteCities.invoke(query.filterEmpty())
                 suggestions?.let {
@@ -86,6 +87,8 @@ abstract class ActionBarActivity : AppCompatActivity(), NavigationListener, Acti
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         val searchAutoComplete: SearchAutoComplete =
             searchView?.findViewById(R.id.search_src_text)
+        searchView.isSubmitButtonEnabled = false
+        searchView.setOnQueryTextListener(this)
         searchAutoComplete.setDropDownBackgroundResource(android.R.color.background_light)
         searchResultCityAdapter = SearchResultCityAdapter(
             context,
@@ -109,11 +112,7 @@ abstract class ActionBarActivity : AppCompatActivity(), NavigationListener, Acti
                 before: Int,
                 count: Int
             ) {
-                handler.removeMessages(TRIGGER_AUTO_COMPLETE)
-                val message = Message()
-                message.obj = searchAutoComplete.text
-                message.what = TRIGGER_AUTO_COMPLETE
-                handler.sendMessageDelayed(message, AUTO_COMPLETE_DELAY)
+                triggerQuery(searchAutoComplete.text.toString())
             }
 
             override fun afterTextChanged(s: Editable) {}
@@ -155,6 +154,25 @@ abstract class ActionBarActivity : AppCompatActivity(), NavigationListener, Acti
      */
     override fun updateTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    /**
+     * Since we have our own textChangedListener, no need this to work on top of it.
+     */
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        return true
+    }
+
+    private fun triggerQuery(query: String) {
+        handler.removeMessages(TRIGGER_AUTO_COMPLETE)
+        val message = Message()
+        message.obj = query
+        message.what = TRIGGER_AUTO_COMPLETE
+        handler.sendMessageDelayed(message, AUTO_COMPLETE_DELAY)
     }
 }
 
