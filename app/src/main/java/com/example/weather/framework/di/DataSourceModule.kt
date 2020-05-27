@@ -8,6 +8,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val dataSourceModule: Module = module {
-    single { CityDataSourceImpl(get(), get()) as CityDataSource }
-    single { WeatherDataSourceImpl(get(), get()) as WeatherDataSource }
+    single<CityDataSource> { CityDataSourceImpl(get(), get()) }
+    single<WeatherDataSource> { WeatherDataSourceImpl(get(), get()) }
 }
