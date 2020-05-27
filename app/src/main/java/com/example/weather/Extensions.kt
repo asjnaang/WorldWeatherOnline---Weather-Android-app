@@ -4,6 +4,8 @@ import android.os.SystemClock
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import coil.Coil
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.core.domain.City
 
@@ -29,5 +31,5 @@ fun View.onClick(cb: (View) -> Unit) {
 
 @BindingAdapter("imageUrl")
 fun loadImage(view: ImageView, weatherImageUrl: String?) {
-    Glide.with(view.context).load(weatherImageUrl).into(view)
+    view.load(weatherImageUrl)
 }
